@@ -1,6 +1,6 @@
 import CustomerList from "@/app/ui/customes/customer-list";
 import { lusitana } from "@/app/ui/fonts";
-import Search from "@/app/ui/search/search";
+import Search from "@/components/search/search";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 

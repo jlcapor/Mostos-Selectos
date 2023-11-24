@@ -2,37 +2,56 @@
 import Link from "next/link";
 import { Button } from "@/components/button";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { useState } from "react";
+import { FieldValues, SubmitHandler,useForm} from "react-hook-form";
+import axios from "axios";
+
 
 export default function CreteUserForm({}) {
-  const [data, setData] = useState({});
   const router = useRouter();
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const res = await fetch("http://localhost:3000/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ hola: "eerrrrr" }),
-    });
+  const [isLoading, setIsLoading] = useState(false);
 
-    const result = await res.json();
-    router.push(`/dashboard/users`);
-  };
+  const { 
+    register,
+    handleSubmit,
+    formState: {
+      errors,
+    },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: ''
+    },
+  });
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const name = e.target.name;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: e.target.value,
-    }));
-  };
 
+  // const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault();
+  //   const res = await fetch("http://localhost:3000/api/users", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({ hola: "eerrrrr" }),
+  //   });
+
+  //   const result = await res.json();
+  //   router.push(`/dashboard/users`);
+  // };
+  const  onSubmit:  SubmitHandler<FieldValues> = (data) => {
+    setIsLoading(true);
+    const res = fetch("http://localhost:3000/api/users", {
+       method: "POST",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({ hola: "eerrrrr" }),
+     });
+     router.push(`/dashboard/users`);
+  }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="rounded-md shadow bg-white p-4 md:p-6">
         <div className="mb-4">
           <label
