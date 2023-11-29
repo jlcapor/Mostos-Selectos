@@ -11,20 +11,43 @@ datasource db {
 }
 
 model Usuario {
-  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  primerNombre    String
-  segundoNombre   String?
-  primerApellido  String
-  segundoApellido String?
-  email           String   @unique
-  celular         String?
-  password        String
-  imagen_url      String   @default("/users/user.jpg")
-  confirmado      Boolean  @default(false)
-  token           String
-  estado          Status   @default(ACTIVO)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id        Int    @id @default(autoincrement())
+  nombres   String
+  apellidos String
+  email     String @unique
+  celular   String
+  password  String
+  rol       Rol    @relation(fields: [rolId], references: [id])
+  rolId     Int
+  estado    Status @default(ACTIVO)
+}
+
+model Sede {
+  id   Int    @id @default(autoincrement())
+  sede String
+}
+
+model Rol {
+  id       Int       @id @default(autoincrement())
+  nombre   String
+  estado   Status    @default(ACTIVO)
+  usuarios Usuario[]
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+}
+
+model subcategory {
+  id Int @id @default(autoincrement())
+}
+
+model Menu {
+  id Int @id @default(autoincrement())
+}
+
+model Accion {
+  id Int @id @default(autoincrement())
 }
 
 enum Status {

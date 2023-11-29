@@ -4,25 +4,10 @@ import prisma from "@/app/lib/prismadb";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const {primerNombre, segundoNombre, primerApellido, segundoApellido, email, celular, password, imagen, token} = body;
-    const nuevoUsuario = await prisma.usuario.create({
-      data: {
-        primerNombre,
-        segundoNombre,
-        primerApellido,
-        segundoApellido,
-        email,
-        celular,
-        password,
-        imagen,
-        token,
-      },
-    });
-    return NextResponse.json(nuevoUsuario);
+    const { nombres, apellidos, email, celular, password, imagen_url, token } = body;
   } catch (error) {
-    return NextResponse.json({ message: "POST Error", error}, { status: 500 });
+    return NextResponse.json({ message: "POST Error", error }, { status: 500 });
   }
-
 }
 
 export async function GET(request: Request) {

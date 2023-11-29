@@ -4,7 +4,7 @@ import Footer from "../ui/layouts/footer/footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-200">
       <NavBar />
       <div className="flex overflow-hidden min-h-screen pb-20 pt-28">
         <SideNav />

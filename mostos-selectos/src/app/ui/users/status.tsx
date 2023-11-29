@@ -14,13 +14,11 @@ export default function UserStatus({ status }: { status: string }) {
           {status === 'INACTIVO' ? (
             <>
               Inactivo
-              <ClockIcon className="ml-1 w-4 text-gray-500" />
             </>
           ) : null}
           {status === 'ACTIVO' ? (
             <>
               Activo
-              <CheckIcon className="ml-1 w-4 text-white" />
             </>
           ) : null}
         </span>

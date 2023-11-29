@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from 'react-hook-form';
 
 type FormInputProps = {
   label: string;
@@ -19,7 +19,7 @@ const FormInput: React.FC<FormInputProps> = ({
     formState: { errors },
   } = useFormContext();
   return (
-    <div className="">
+    <div className="w-full relative">
       <label htmlFor={name} className="block text-ct-blue-600 mb-3">
         {label}
       </label>

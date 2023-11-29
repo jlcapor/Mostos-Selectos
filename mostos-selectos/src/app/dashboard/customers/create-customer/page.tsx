@@ -5,9 +5,9 @@ export default async function CreateCustomerPage() {
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Customers", href: "/dashboard/customers" },
+          { label: "Clientes", href: "/dashboard/customers" },
           {
-            label: "Create Customer",
+            label: "Crear Cliente",
             href: "/dashboard/users/create-customer",
             active: true,
           },

@@ -1,5 +1,5 @@
 import { fetchFilteredUsers } from "@/app/lib/data/users/userData";
-import UserStatus from "./UserStatus";
+import UserStatus from "./status";
 import Image from "next/image";
 import { DeleteUser, UpdateUser } from "./buttons";
 
@@ -24,16 +24,7 @@ export default async function UserList({
                 <div className="flex items-center justify-between border-b pb-4">
                   <div>
                     <div className="mb-2 flex items-center">
-                      <Image
-                        src={user.imagen_url}
-                        className="mr-2 rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${user.primerNombre}'s profile picture`}
-                      />
-                      <p>
-                        {user.primerNombre} {user.segundoNombre}
-                      </p>
+                      {user.nombres} {user.apellidos}
                     </div>
                     <p className="text-sm text-gray-500">{user.email}</p>
                   </div>
@@ -55,6 +46,9 @@ export default async function UserList({
             <thead className="rounded-lg text-left text-sm font-normal">
               <tr>
                 <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                  ID
+                </th>
+                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
                   Nombre
                 </th>
                 <th scope="col" className="px-3 py-5 font-medium">
@@ -66,11 +60,16 @@ export default async function UserList({
                 <th scope="col" className="px-3 py-5 font-medium">
                   Celular
                 </th>
-
                 <th scope="col" className="px-3 py-5 font-medium">
-                  Status
+                  Rol
                 </th>
-                <th scope="col" className="px-3 py-5 font-medium text-center p-4">
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Estado
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-5 font-medium text-center p-4"
+                >
                   Actions
                 </th>
               </tr>
@@ -82,29 +81,27 @@ export default async function UserList({
                   className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
                 >
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex items-center gap-3">
-                      <Image
-                        src={user.imagen_url}
-                        className="rounded-full"
-                        width={28}
-                        height={28}
-                        alt={`${user.primerNombre}'s profile picture`}
-                      />
-                      {user.primerNombre} {user.segundoNombre} {"  "}
-                    </div>
+                    {user.id}
+                  </td>
+
+                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                    {user.nombres}
                   </td>
 
                   <td className="whitespace-nowrap px-3 py-3">
-                    {user.primerApellido} {user.segundoApellido}
+                    {user.apellidos}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">{user.email}</td>
                   <td className="whitespace-nowrap px-3 py-3">
                     {user.celular}
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
+                    {user.rol.nombre}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
                     <UserStatus status={user.estado} />
                   </td>
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                  <td className="flex justify-end gap-2 whitespace-nowrap px-6 py-4 text-sm">
                     <div className="flex justify-center gap-3">
                       <UpdateUser id={user.id} />
                     </div>
