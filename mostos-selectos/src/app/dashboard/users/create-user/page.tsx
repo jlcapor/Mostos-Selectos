@@ -1,20 +1,22 @@
 import Breadcrumbs from "@/components/breadcrumbs";
-import CreteUserForm from "@/app/ui/users/create-user";
+import Form from "@/app/ui/users/create-user";
+import { fetchRoles } from "@/app/lib/data/users/userData";
 
 export default async function CreateUserPage() {
+  const roles = await fetchRoles();
   return (
     <main>
       <Breadcrumbs
         breadcrumbs={[
-          { label: "Users", href: "/dashboard/users" },
+          { label: "Usuarios", href: "/dashboard/users" },
           {
-            label: "Create User",
+            label: "Crear Usuario",
             href: "/dashboard/users/create-user",
             active: true,
           },
         ]}
       />
-      <CreteUserForm />
+      <Form roles={roles} />
     </main>
   );
 }

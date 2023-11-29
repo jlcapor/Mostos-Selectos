@@ -1,16 +1,19 @@
-export const formatDateToLocal = (
-  dateStr: string,
-  locale: string = 'en-US',
-) => {
-  const date = new Date(dateStr);
-  const options: Intl.DateTimeFormatOptions = {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  };
-  const formatter = new Intl.DateTimeFormat(locale, options);
-  return formatter.format(date);
-};
+
+import toast from "react-hot-toast"
+import * as z from "zod"
+
+export function catchError(err: unknown) {
+  if (err instanceof z.ZodError) {
+    const errors = err.issues.map((issue) => {
+      return issue.message
+    })
+    return toast.error(errors.join("\n"))
+  } else if (err instanceof Error) {
+    return toast.error(err.message)
+  } else {
+    return toast("Something went wrong, please try again later.")
+  }
+}
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
   if (totalPages <= 7) {

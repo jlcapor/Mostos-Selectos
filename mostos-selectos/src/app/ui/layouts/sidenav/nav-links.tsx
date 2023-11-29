@@ -16,17 +16,17 @@ const links = [
     icon: HomeIcon 
   },
   {
-    name: 'Users',
+    name: 'Usuarios',
     href: '/dashboard/users',
     icon: UserIcon,
   },
   { 
-    name: 'Customers', 
+    name: 'Clientes', 
     href: '/dashboard/customers', 
     icon: UserGroupIcon 
   },
   {
-    name: 'Services',
+    name: 'Servicios',
     href: '/dashboard/services',
     icon: WrenchScrewdriverIcon
   },

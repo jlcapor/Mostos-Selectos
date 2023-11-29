@@ -11,32 +11,46 @@ datasource db {
 }
 
 model Usuario {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  primerNombre String
-  segundoNombre String?
-  primerApellido String
-  segundoApellido String?
-  email String @unique
-  imagen String?
-  celular String?
-  password String
-  confirmado Boolean @default(false)
-  token String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  usuarios UsuarioRol[]
+  id        Int    @id @default(autoincrement())
+  nombres   String
+  apellidos String
+  email     String @unique
+  celular   String
+  password  String
+  rol       Rol    @relation(fields: [rolId], references: [id])
+  rolId     Int
+  estado    Status @default(ACTIVO)
+}
+
+model Sede {
+  id   Int    @id @default(autoincrement())
+  sede String
 }
 
 model Rol {
-  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nombreRol String
-  roles UsuarioRol[]
+  id       Int       @id @default(autoincrement())
+  nombre   String
+  estado   Status    @default(ACTIVO)
+  usuarios Usuario[]
 }
 
-model UsuarioRol {
+model Category {
   id Int @id @default(autoincrement())
-  usuarioId String @db.Uuid
-  rolId String @db.Uuid
-  usuario  Usuario  @relation(fields: [usuarioId], references: [id])
-  rol Rol @relation(fields: [rolId], references: [id])
+}
+
+model subcategory {
+  id Int @id @default(autoincrement())
+}
+
+model Menu {
+  id Int @id @default(autoincrement())
+}
+
+model Accion {
+  id Int @id @default(autoincrement())
+}
+
+enum Status {
+  ACTIVO
+  INACTIVO
 }

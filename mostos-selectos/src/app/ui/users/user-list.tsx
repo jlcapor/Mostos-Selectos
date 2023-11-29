@@ -1,48 +1,115 @@
-export default async function UserList({}) {
+import { fetchFilteredUsers } from "@/app/lib/data/users/userData";
+import UserStatus from "./status";
+import Image from "next/image";
+import { DeleteUser, UpdateUser } from "./buttons";
+
+export default async function UserList({
+  query,
+  currentPage,
+}: {
+  query: string;
+  currentPage: number;
+}) {
+  const users = await fetchFilteredUsers(query, currentPage);
   return (
-    <div className="mt-4 flex flex-col">
-      <div className="overflow-x-auto">
-        <div className="align-middle inline-block min-w-full">
-          <div className="shadow overflow-hidden">
-            <table className="table-fixed min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="p-4">
-                    <div className="flex items-center">
-                      <input
-                        id="checkbox-all"
-                        aria-describedby="checkbox-1"
-                        type="checkbox"
-                        className="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"
-                      />
-                      <label htmlFor="checkbox-all" className="sr-only">
-                        checkbox
-                      </label>
+    <div className="mt-6 flow-root">
+      <div className="inline-block min-w-full align-middle">
+        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+          <div className="md:hidden">
+            {users?.map((user) => (
+              <div
+                key={user.id}
+                className="mb-2 w-full rounded-md bg-white p-4"
+              >
+                <div className="flex items-center justify-between border-b pb-4">
+                  <div>
+                    <div className="mb-2 flex items-center">
+                      {user.nombres} {user.apellidos}
                     </div>
-                  </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-500 uppercase">
-                    Nombre
-                  </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-500 uppercase">
-                    Apellidos
-                  </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-500 uppercase">
-                    Email
-                  </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-500 uppercase">
-                    Celular
-                  </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-500 uppercase">
-                    Rol
-                  </th>
-                  <th className="p-4 text-left text-xs font-bold text-gray-500 uppercase">
-                    Status
-                  </th>
-                  <th className="p-4"></th>
-                </tr>
-              </thead>
-            </table>
+                    <p className="text-sm text-gray-500">{user.email}</p>
+                  </div>
+                  <UserStatus status={user.estado} />
+                </div>
+                <div className="flex w-full items-center justify-between pt-4">
+                  <div>
+                    <p className="text-xl font-medium"></p>
+                    <p></p>
+                  </div>
+                  <div className="flex justify-end gap-2">
+                    <UpdateUser id={user.id} />
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
+          <table className="hidden min-w-full text-gray-900 md:table">
+            <thead className="rounded-lg text-left text-sm font-normal">
+              <tr>
+                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                  ID
+                </th>
+                <th scope="col" className="px-4 py-5 font-medium sm:pl-6">
+                  Nombre
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Apellidos
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Email
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Celular
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Rol
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Estado
+                </th>
+                <th
+                  scope="col"
+                  className="px-3 py-5 font-medium text-center p-4"
+                >
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white">
+              {users?.map((user) => (
+                <tr
+                  key={user.id}
+                  className="w-full border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                >
+                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                    {user.id}
+                  </td>
+
+                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                    {user.nombres}
+                  </td>
+
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {user.apellidos}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">{user.email}</td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {user.celular}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {user.rol.nombre}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    <UserStatus status={user.estado} />
+                  </td>
+                  <td className="flex justify-end gap-2 whitespace-nowrap px-6 py-4 text-sm">
+                    <div className="flex justify-center gap-3">
+                      <UpdateUser id={user.id} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
